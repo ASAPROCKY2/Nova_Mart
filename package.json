@@ -6,21 +6,32 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "start": "npm run build && node dist/index.js"
+    "start": "npm run build && node dist/index.js",
+    "generate": "drizzle-kit generate",
+    "migrate": "tsx src/drizzle/migrate.ts",
+    "seed": "tsx src/Drizzle/seed.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.11.0",
   "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/nodemailer": "^7.0.2",
     "@types/pg": "^8.15.5",
     "drizzle-kit": "^0.31.5",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.6",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^7.0.9",
     "pg": "^8.16.3"
   }
 }
