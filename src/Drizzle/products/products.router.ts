@@ -10,9 +10,6 @@ import {
   getActiveProductsController,
 } from "./products.controller";
 
-//
-// 🧭 Product Routes for NovaMart
-//
 const ProductRoutes = (app: Express) => {
   //
   // ➕ CREATE PRODUCT
@@ -37,17 +34,6 @@ const ProductRoutes = (app: Express) => {
   });
 
   //
-  // 🔍 GET PRODUCT BY ID
-  //
-  app.route("/products/:id").get(async (req, res, next) => {
-    try {
-      await getProductByIdController(req, res);
-    } catch (error) {
-      next(error);
-    }
-  });
-
-  //
   // 🔍 GET PRODUCT BY NAME
   // Example: /products/search?name=milk
   //
@@ -60,8 +46,29 @@ const ProductRoutes = (app: Express) => {
   });
 
   //
+  // 🟢 GET ACTIVE PRODUCTS (for customer-facing catalog)
+  //
+  app.route("/products/active").get(async (req, res, next) => {
+    try {
+      await getActiveProductsController(req, res);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  //
+  // 🔍 GET PRODUCT BY ID
+  //
+  app.route("/products/:id").get(async (req, res, next) => {
+    try {
+      await getProductByIdController(req, res);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  //
   // 🧺 GET PRODUCTS BY CATEGORY ID
-  // Example: /categories/:category_id/products
   //
   app.route("/categories/:category_id/products").get(async (req, res, next) => {
     try {
@@ -88,17 +95,6 @@ const ProductRoutes = (app: Express) => {
   app.route("/products/:id").delete(async (req, res, next) => {
     try {
       await deleteProductController(req, res);
-    } catch (error) {
-      next(error);
-    }
-  });
-
-  //
-  // 🟢 GET ACTIVE PRODUCTS (for customer-facing catalog)
-  //
-  app.route("/products/active").get(async (req, res, next) => {
-    try {
-      await getActiveProductsController(req, res);
     } catch (error) {
       next(error);
     }

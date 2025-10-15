@@ -1,4 +1,4 @@
-import { eq, sql } from "drizzle-orm";
+import { eq, sql, ilike } from "drizzle-orm";
 import db from "../../Drizzle/db";
 import {
   ProductsTable,
@@ -21,7 +21,7 @@ export const createProductService = async (product: TIProduct) => {
 export const getProductsService = async () => {
   return await db.query.ProductsTable.findMany({
     with: {
-      category: true, // include category info
+      category: true, // include related category info
     },
   });
 };
@@ -39,11 +39,13 @@ export const getProductByIdService = async (id: number) => {
 };
 
 //
-// 🧩 Get product by name
+// 🧩 Get product by name (✅ fixed: case-insensitive + trims spaces)
 //
 export const getProductByNameService = async (name: string) => {
+  const cleanName = name.trim();
+
   return await db.query.ProductsTable.findFirst({
-    where: sql`${ProductsTable.name} = ${name}`,
+    where: ilike(ProductsTable.name, `%${cleanName}%`), // partial + case-insensitive match
     with: {
       category: true,
     },
@@ -88,7 +90,7 @@ export const deleteProductService = async (id: number) => {
 };
 
 //
-// 🧩 Get active products (in stock, visible to customers)
+// 🧩 Get all active products (visible + in stock)
 //
 export const getActiveProductsService = async () => {
   return await db.query.ProductsTable.findMany({
@@ -100,7 +102,7 @@ export const getActiveProductsService = async () => {
 };
 
 //
-// 🧩 Reduce stock after order (helper function)
+// 🧩 Reduce stock after order (helper)
 //
 export const reduceProductStockService = async (id: number, quantity: number) => {
   const product = await getProductByIdService(id);
@@ -116,3 +118,4 @@ export const reduceProductStockService = async (id: number, quantity: number) =>
 
   return "Stock updated successfully";
 };
+ 

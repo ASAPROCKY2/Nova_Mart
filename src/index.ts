@@ -1,5 +1,3 @@
-// src/index.ts
-
 import express from "express";
 import dotenv from "dotenv";
 
@@ -9,11 +7,12 @@ dotenv.config();
 // 🛠️ Import routes
 import UserRoutes from "./Drizzle/users/user.router";
 import CategoryRoutes from "./Drizzle/categories/categories.router";
-import ProductRoutes from "./Drizzle/products/products.router"; // ✅ newly added
+import ProductRoutes from "./Drizzle/products/products.router"; 
+import OrderRoutes from "./Drizzle/orders/orders.routers";
+import OrderItemRoutes from "./Drizzle/orderitems/orderitems.router";
 
-// import OrderRoutes from "./Drizzle/orders/order.routes";
-// import PaymentRoutes from "./Drizzle/payments/payment.routes";
-// import DeliveryRoutes from "./Drizzle/deliveries/delivery.routes";
+import PaymentRoutes from "./Drizzle/payments/payments.router";
+import DeliveryRoutes from "./Drizzle/deliveries/deliveries.router";
 
 const app = express();
 app.use(express.json()); // Parse JSON request bodies
@@ -26,12 +25,13 @@ app.get("/", (req, res) => {
 // 👥 Register routes
 UserRoutes(app);
 CategoryRoutes(app);
-ProductRoutes(app); // ✅ added new route registration
+ProductRoutes(app);
+OrderRoutes(app);
+OrderItemRoutes(app);
 
 // 🧭 Future routes (to be activated later)
-// OrderRoutes(app);
-// PaymentRoutes(app);
-// DeliveryRoutes(app);
+PaymentRoutes(app);
+DeliveryRoutes(app);
 
 // 🚀 Start the server
 const PORT = process.env.PORT || 8081;
