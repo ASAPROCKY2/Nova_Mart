@@ -41,6 +41,30 @@ const OrderRoutes = (app: Express) => {
   });
 
   //
+  // 📦 GET ORDERS BY STATUS
+  // ⚠️ Must be above /orders/:id to avoid being mistaken for an ID route
+  //
+  app.route("/orders/status").get(async (req, res, next) => {
+    try {
+      await getOrdersByStatusController(req, res);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  //
+  // 💰 GET TOTAL SALES SUMMARY
+  // ⚠️ Also comes before /orders/:id
+  //
+  app.route("/orders/summary/sales").get(async (req, res, next) => {
+    try {
+      await getTotalSalesController(req, res);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  //
   // 🔍 GET ORDER BY ID
   //
   app.route("/orders/:id").get(async (req, res, next) => {
@@ -123,28 +147,6 @@ const OrderRoutes = (app: Express) => {
   app.route("/deliveries/:deliveryId/status").put(async (req, res, next) => {
     try {
       await updateDeliveryStatusController(req, res);
-    } catch (error) {
-      next(error);
-    }
-  });
-
-  //
-  // 📦 GET ORDERS BY STATUS
-  //
-  app.route("/orders/status").get(async (req, res, next) => {
-    try {
-      await getOrdersByStatusController(req, res);
-    } catch (error) {
-      next(error);
-    }
-  });
-
-  //
-  // 💰 GET TOTAL SALES SUMMARY
-  //
-  app.route("/orders/summary/sales").get(async (req, res, next) => {
-    try {
-      await getTotalSalesController(req, res);
     } catch (error) {
       next(error);
     }

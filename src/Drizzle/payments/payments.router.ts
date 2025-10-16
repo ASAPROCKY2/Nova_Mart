@@ -36,17 +36,6 @@ const PaymentRoutes = (app: Express) => {
   });
 
   //
-  // 🔍 READ — Get payment by ID
-  //
-  app.route("/payments/:id").get(async (req, res, next) => {
-    try {
-      await getPaymentByIdController(req, res);
-    } catch (error) {
-      next(error);
-    }
-  });
-
-  //
   // 🔍 READ — Get payments by order ID (query param)
   // Example: /payments/by-order?orderId=123
   //
@@ -65,6 +54,17 @@ const PaymentRoutes = (app: Express) => {
   app.route("/payments/summary").get(async (req, res, next) => {
     try {
       await getPaymentSummaryByOrderIdController(req, res);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  //
+  // 🔍 READ — Get payment by ID
+  //
+  app.route("/payments/:id").get(async (req, res, next) => {
+    try {
+      await getPaymentByIdController(req, res);
     } catch (error) {
       next(error);
     }

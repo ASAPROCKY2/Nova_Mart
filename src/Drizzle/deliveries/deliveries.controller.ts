@@ -72,7 +72,7 @@ export const getDeliveryByIdController = async (req: Request, res: Response) => 
 //
 export const getDeliveriesByOrderIdController = async (req: Request, res: Response) => {
   try {
-    const orderId = parseInt(req.query.orderId as string);
+    const orderId = parseInt(req.params.orderId); // ✅ FIXED: was req.query.orderId
     if (isNaN(orderId)) return res.status(400).json({ message: "Invalid order ID" });
 
     const deliveries = await getDeliveriesByOrderIdService(orderId);
@@ -125,7 +125,7 @@ export const deleteDeliveryController: (req: Request, res: Response) => Promise<
 //
 export const getDeliverySummaryByOrderIdController = async (req: Request, res: Response) => {
   try {
-    const orderId = parseInt(req.query.orderId as string);
+    const orderId = parseInt(req.params.orderId); // ✅ FIXED: was req.query.orderId
     if (isNaN(orderId)) return res.status(400).json({ message: "Invalid order ID" });
 
     const summary = await getDeliverySummaryByOrderIdService(orderId);
